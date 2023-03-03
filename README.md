@@ -15,8 +15,8 @@ C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\cs
 
 
 
-
-
+*console comand
+mat_setvideomode 1440 1080
 
 
 
