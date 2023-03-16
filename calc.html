@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Калькулятор</title>
+  </head>
+  <body>
+    <form>
+      <input type="text" id="expression" oninput="calculateResult()"><br>
+      <input type="text" id="result" disabled><br>
+    </form>
+    <script>
+      function calculateResult() {
+        var expression = document.getElementById("expression").value;
+        var result = eval(expression);
+        document.getElementById("result").value = result;
+      }
+    </script>
+  </body>
+</html>
