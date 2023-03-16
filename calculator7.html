@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Калькулятор</title>
+  </head>
+  <body>
+    <h2>Введите число:</h2>
+    <input type="text" id="number" name="number">
+    <button onclick="calculate()">Рассчитать</button>
+    <br><br>
+    <table>
+      <tr>
+        <td>Пропорциональность:</td>
+        <td><span id="result1"></span></td>
+      </tr>
+      <tr>
+        <td>m_yaw:</td>
+        <td><span id="result2"></span></td>
+      </tr>
+      <tr>
+        <td>sensitivity:</td>
+        <td><input type="text" id="sensitivity" name="sensitivity"></td>
+      </tr>
+      <tr>
+        <td>Результат:</td>
+        <td><span id="result3"></span></td>
+      </tr>
+    </table>
+    
+    <script>
+      function calculate() {
+        var number = parseFloat(document.getElementById("number").value);
+        var prop = number / 0.022;
+        var m_yaw = 0.022 / prop;
+        var sensitivity = parseFloat(document.getElementById("sensitivity").value);
+        var result = sensitivity * prop;
+        
+        document.getElementById("result1").textContent = prop.toString();
+        document.getElementById("result2").textContent = m_yaw.toString();
+        document.getElementById("result3").textContent = result.toString();
+      }
+    </script>
+  </body>
+</html>
