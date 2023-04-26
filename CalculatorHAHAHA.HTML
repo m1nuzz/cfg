@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pixel Width Calculator</title>
+    <script>
+        function calculatePixelWidth() {
+            // Get input values
+            var aspectRatio = document.getElementById("aspectRatio").value;
+            var resolutionWidth = parseInt(document.getElementById("resolutionWidth").value);
+            var resolutionHeight = parseInt(document.getElementById("resolutionHeight").value);
+            var decimalPlaces = parseInt(document.getElementById("decimalPlaces").value);
+
+            // Calculate pixel width in degrees
+            var widthRatio = parseFloat(aspectRatio.split(":")[0]);
+            var heightRatio = parseFloat(aspectRatio.split(":")[1]);
+            var diagonal = Math.sqrt(resolutionWidth * resolutionWidth + resolutionHeight * resolutionHeight);
+            var pixelWidth = Math.atan2(heightRatio, widthRatio) * (180 / Math.PI);
+            
+            // Display result without rounding
+            document.getElementById("result").innerHTML = "Pixel Width (no rounding): " + pixelWidth.toString() + " degrees";
+
+            // Calculate and display result with rounding
+            var roundedPixelWidth = pixelWidth.toFixed(decimalPlaces);
+            document.getElementById("roundedResult").innerHTML = "Pixel Width (rounded): " + roundedPixelWidth + " degrees";
+        }
+    </script>
+</head>
+<body>
+    <h1>Pixel Width Calculator</h1>
+    <form onsubmit="return false;">
+        <label for="aspectRatio">Aspect Ratio:</label>
+        <input type="text" id="aspectRatio" placeholder="Enter aspect ratio (e.g., 4:3)" required>
+        <br>
+        <label for="resolutionWidth">Resolution Width:</label>
+        <input type="text" id="resolutionWidth" placeholder="Enter resolution width" required>
+        <br>
+        <label for="resolutionHeight">Resolution Height:</label>
+        <input type="text" id="resolutionHeight" placeholder="Enter resolution height" required>
+        <br>
+        <label for="decimalPlaces">Decimal Places:</label>
+        <input type="text" id="decimalPlaces" placeholder="Enter decimal places for rounding" required>
+        <br>
+        <button onclick="calculatePixelWidth()">Calculate</button>
+    </form>
+    <p id="result"></p>
+    <p id="roundedResult"></p>
+</body>
+</html>
