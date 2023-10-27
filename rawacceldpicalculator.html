@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор DPI</title>
+</head>
+<body>
+    <h1>Калькулятор DPI</h1>
+    <p>Введите текущий DPI и желаемый DPI, затем нажмите "Рассчитать", чтобы получить множитель DPI:</p>
+    
+    <input type="number" id="currentDPI" placeholder="Текущий DPI">
+    <input type="number" id="desiredDPI" placeholder="Желаемый DPI">
+    <button onclick="calculateMultiplier()">Рассчитать</button>
+
+    <p id="result">Здесь будет результат</p>
+
+    <script>
+        function calculateMultiplier() {
+            const currentDPI = parseFloat(document.getElementById("currentDPI").value);
+            const desiredDPI = parseFloat(document.getElementById("desiredDPI").value);
+
+            if (!isNaN(currentDPI) && !isNaN(desiredDPI)) {
+                const multiplier = currentDPI / desiredDPI;
+                document.getElementById("result").textContent = `Множитель DPI: ${multiplier}`;
+            } else {
+                document.getElementById("result").textContent = "Пожалуйста, введите корректные значения DPI.";
+            }
+        }
+    </script>
+</body>
+</html>
