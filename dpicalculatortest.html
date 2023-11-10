@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DPI Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>DPI Calculator</h2>
+
+  <form id="dpiForm">
+    <label for="baseDpiInput">Enter Base DPI:</label>
+    <input type="number" id="baseDpiInput" placeholder="Enter Base DPI" required>
+
+    <label for="additionalDpiInput">Enter Additional DPI (Optional):</label>
+    <input type="number" id="additionalDpiInput" placeholder="Enter Additional DPI">
+
+    <button type="button" onclick="calculate()">Calculate</button>
+  </form>
+
+  <h3>Results:</h3>
+  <div id="results"></div>
+
+  <script>
+    function calculate() {
+      const baseDpi = document.getElementById('baseDpiInput').value;
+      const additionalDpi = document.getElementById('additionalDpiInput').value;
+
+      // If additional DPI is provided, calculate max DPI and multiplier
+      const maxDpi = additionalDpi ? baseDpi * (32 / additionalDpi) : baseDpi * 32;
+
+      const sensitivities = [
+        maxDpi, maxDpi / 2, maxDpi / 4,
+        maxDpi / 8, maxDpi / 16, maxDpi / 32
+      ];
+
+      const multipliers = ['1/32', '1/16', '1/8', '2/8', '4/8', '1'];
+
+      let resultHtml = '<ul>';
+      for (let i = 0; i < sensitivities.length; i++) {
+        resultHtml += `<li>${sensitivities[i]} DPI (sensitivity ${i + 1}) (${multipliers[i]} multiplier)</li>`;
+      }
+      resultHtml += '</ul>';
+
+      document.getElementById('results').innerHTML = resultHtml;
+    }
+  </script>
+
+</body>
+</html>
