@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPI Calculator</title>
+</head>
+<body>
+
+    <h2>DPI Calculator</h2>
+
+    <label for="sensitivity">Your Sensitivity:</label>
+    <input type="number" id="sensitivity" placeholder="Enter your sensitivity" step="0.01">
+
+    <label for="currentDPI">Your Current DPI:</label>
+    <input type="number" id="currentDPI" placeholder="Enter your current DPI">
+
+    <label for="desiredDPI">Desired DPI:</label>
+    <input type="number" id="desiredDPI" placeholder="Enter the DPI you want to achieve">
+
+    <button onclick="calculateDPI()">Calculate</button>
+
+    <p id="result"></p>
+
+    <script>
+        function calculateDPI() {
+            // Get values from input fields
+            var sensitivity = parseFloat(document.getElementById("sensitivity").value);
+            var currentDPI = parseInt(document.getElementById("currentDPI").value);
+            var desiredDPI = parseInt(document.getElementById("desiredDPI").value);
+
+            // Calculate the new sensitivity
+            var newSensitivity = sensitivity / (desiredDPI / currentDPI);
+
+            // Display the result without rounding
+            document.getElementById("result").innerHTML = "Your new sensitivity should be: " + newSensitivity;
+        }
+    </script>
+
+</body>
+</html>
