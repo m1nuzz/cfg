@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sens Calculator</title>
+</head>
+<body>
+
+<h2>Калькулятор сенсов</h2>
+
+<label for="inputNumber">Введите число:</label>
+<input type="text" id="inputNumber" placeholder="Например, 1500">
+
+<button onclick="calculateSens()">Рассчитать</button>
+
+<p id="result">Результат: </p>
+
+<script>
+    function calculateSens() {
+        // Получаем введенное число из input
+        var inputNumber = document.getElementById('inputNumber').value;
+
+        // Проверяем, является ли введенное значение числом
+        if (!isNaN(inputNumber)) {
+            // Рассчитываем сенсы по формуле: число * 0.001
+            var sens = inputNumber * 0.001;
+
+            // Выводим результат
+            document.getElementById('result').innerHTML = 'Результат: ' + sens.toFixed(1) + 'sens';
+        } else {
+            // Выводим сообщение об ошибке, если введенное значение не является числом
+            document.getElementById('result').innerHTML = 'Введите корректное число';
+        }
+    }
+</script>
+
+</body>
+</html>
