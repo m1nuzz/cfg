@@ -23,6 +23,8 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            background-color: green;
+            color: white;
         }
         .tab-button {
             transition: background-color 0.3s ease;
@@ -32,6 +34,10 @@
             color: white;
         }
         .tab-button.Valorant {
+            background-color: red;
+            color: white;
+        }
+        .tab-button.Windows {
             background-color: red;
             color: white;
         }
@@ -85,6 +91,20 @@
 
     <p id="resultCustomSensitivity"></p>
 
+    <hr>
+
+    <h2>Windows/RawAccel Calculator</h2>
+
+    <label for="currentDPIWindows">Current DPI:</label>
+    <input type="number" id="currentDPIWindows" placeholder="Enter current DPI">
+    
+    <label for="desiredDPIWindows">Desired DPI:</label>
+    <input type="number" id="desiredDPIWindows" placeholder="Enter desired DPI">
+    
+    <button onclick="calculateMultiplierWindows()">Calculate Multiplier</button>
+
+    <p id="resultWindows">Result will appear here</p>
+
     <script>
         var activeTab = 'CS';
 
@@ -120,6 +140,18 @@
                 document.getElementById('resultCustomSensitivity').innerHTML = 'Result: ' + customSensitivity + 'sens';
             } else {
                 document.getElementById('resultCustomSensitivity').innerHTML = 'Enter a valid number';
+            }
+        }
+
+        function calculateMultiplierWindows() {
+            var currentDPIWindows = parseFloat(document.getElementById("currentDPIWindows").value);
+            var desiredDPIWindows = parseFloat(document.getElementById("desiredDPIWindows").value);
+
+            if (!isNaN(currentDPIWindows) && !isNaN(desiredDPIWindows)) {
+                var multiplierWindows = currentDPIWindows / desiredDPIWindows;
+                document.getElementById("resultWindows").textContent = `DPI Multiplier: ${multiplierWindows}`;
+            } else {
+                document.getElementById("resultWindows").textContent = "Please enter valid DPI values.";
             }
         }
 
