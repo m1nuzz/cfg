@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Sensitivity Calculators</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: black;
+            color: white;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>DPI Calculator</h2>
+
+    <label for="sensitivity">Your Sensitivity:</label>
+    <input type="number" id="sensitivity" placeholder="Enter your sensitivity" step="0.01">
+
+    <label for="currentDPI">Your Current DPI:</label>
+    <input type="number" id="currentDPI" placeholder="Enter your current DPI">
+
+    <label for="desiredDPI">Desired DPI:</label>
+    <input type="number" id="desiredDPI" placeholder="Enter the DPI you want to achieve">
+
+    <button onclick="calculateDPI()">Calculate DPI</button>
+
+    <p id="resultDPI"></p>
+
+    <hr>
+
+    <h2>Minimum Sensitivity Calculator</h2>
+
+    <label for="dpi">Enter DPI:</label>
+    <input type="number" id="dpi" placeholder="Enter DPI">
+
+    <label for="sensitivity2">Enter Sensitivity:</label>
+    <input type="number" step="any" id="sensitivity2" placeholder="Enter Sensitivity">
+
+    <button onclick="calculateSensitivity()">Calculate Sensitivity</button>
+
+    <p id="resultSensitivity"></p>
+
+    <hr>
+
+    <h2>Sens Multiplier Calculator for RawAccel</h2>
+
+    <label for="inputNumber">Enter number:</label>
+    <input type="text" id="inputNumber" placeholder="Enter a number">
+
+    <button onclick="calculateCustomSensitivity()">Calculate Custom Sensitivity</button>
+
+    <p id="resultCustomSensitivity"></p>
+
+    <script>
+        function calculateDPI() {
+            var sensitivity = parseFloat(document.getElementById("sensitivity").value);
+            var currentDPI = parseInt(document.getElementById("currentDPI").value);
+            var desiredDPI = parseInt(document.getElementById("desiredDPI").value);
+
+            var newSensitivity = sensitivity / (desiredDPI / currentDPI);
+
+            document.getElementById("resultDPI").innerHTML = "Your new sensitivity should be: " + newSensitivity;
+        }
+
+        function calculateSensitivity() {
+            var dpiInput = document.getElementById('dpi').value;
+            var sensitivityInput = document.getElementById('sensitivity2').value;
+
+            if (dpiInput && sensitivityInput) {
+                var constant = parseFloat(sensitivityInput) * parseFloat(dpiInput);
+                var resultSensitivity = constant / 0.0001;
+
+                document.getElementById('resultSensitivity').innerHTML = "Required Sensitivity for 0.0001 DPI: " + resultSensitivity;
+            } else {
+                document.getElementById('resultSensitivity').innerHTML = "Please enter both DPI and Sensitivity values.";
+            }
+        }
+
+        function calculateCustomSensitivity() {
+            var inputNumber = document.getElementById('inputNumber').value;
+
+            if (!isNaN(inputNumber)) {
+                var customSensitivity = inputNumber * 0.001;
+                document.getElementById('resultCustomSensitivity').innerHTML = 'Result: ' + customSensitivity + 'sens';
+            } else {
+                document.getElementById('resultCustomSensitivity').innerHTML = 'Enter a valid number';
+            }
+        }
+    </script>
+
+</body>
+</html>
