@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam-KSMarket Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Steam-KSMarket Calculator</h1>
+    <label for="steamPrice">Item cost in Steam:</label>
+    <input type="number" id="steamPrice" placeholder="Enter Steam price" required>
+    
+    <label for="salePrice">Item sale price on Steam:</label>
+    <input type="number" id="salePrice" placeholder="Enter sale price on Steam" required>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculate() {
+            const steamPrice = parseFloat(document.getElementById('steamPrice').value);
+            const salePrice = parseFloat(document.getElementById('salePrice').value);
+
+            const incomeAfterSteamFee = salePrice - (salePrice * 0.15);
+            const incomeAfterKSMarketFee = incomeAfterSteamFee - (incomeAfterSteamFee * 0.05);
+            const totalResult = incomeAfterKSMarketFee - steamPrice;
+
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = `Result: ${incomeAfterKSMarketFee.toFixed(4)} (Profit/Loss: ${totalResult.toFixed(4)})`;
+        }
+    </script>
+</body>
+</html>
