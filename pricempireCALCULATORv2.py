@@ -3,6 +3,10 @@ import webbrowser
 def generate_links(base_url, skin_cost, num_variants):
     links = []
 
+    # Generate link for the original cost
+    original_url = base_url.replace('COST', str(skin_cost))
+    links.append((original_url, 1))
+
     # Generate links with different variants of skin cost
     for i in range(2, num_variants + 1):
         modified_url = base_url.replace('COST', str(skin_cost / i)) + f"&variant={i}"
