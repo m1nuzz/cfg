@@ -1,29 +1,55 @@
 import os
 import requests
+from tqdm import tqdm
 import subprocess
 import time
 import pyautogui
-import pygetwindow as gw
 
 # URL для скачивания
 url = "https://github.com/Vencord/Installer/releases/latest/download/VencordInstallerCli.exe"
 filename = "VencordInstallerCli.exe"
 
-# Скачивание файла
+# Скачивание файла с прогресс-баром
 try:
+    # Получаем размер файла
     response = requests.get(url, stream=True)
-    response.raise_for_status()  # Проверка на успешное выполнение запроса
+    response.raise_for_status()
+    total_size = int(response.headers.get('content-length', 0))
+    block_size = 1024  # 1 Kibibyte
+
+    # Создаем прогресс-бар
+    progress_bar = tqdm(
+        total=total_size, 
+        unit='iB', 
+        unit_scale=True, 
+        desc=filename, 
+        colour='green'
+    )
+
+    # Скачивание с отображением прогресса
     with open(filename, "wb") as file:
-        for chunk in response.iter_content(chunk_size=8192):
-            file.write(chunk)
-    print(f"Скачан файл: {filename}")
+        downloaded_size = 0
+        for chunk in response.iter_content(block_size):
+            size = file.write(chunk)
+            progress_bar.update(size)
+            downloaded_size += size
+
+    progress_bar.close()
+
+    # Проверка корректности скачивания
+    if total_size != 0 and downloaded_size != total_size:
+        print("Ошибка: Файл скачан не полностью")
+        exit(1)
+
+    print(f"\nФайл {filename} успешно скачан.")
+
 except requests.exceptions.RequestException as e:
     print(f"Ошибка при скачивании файла: {e}")
     exit(1)
 
 # Запуск exe файла
 try:
-    process = subprocess.Popen([filename])
+    subprocess.Popen([filename])
 except Exception as e:
     print(f"Ошибка при запуске файла: {e}")
     exit(1)
@@ -31,36 +57,24 @@ except Exception as e:
 # Подождем, чтобы процесс запустился
 time.sleep(2)
 
-# Функция для поиска окна по заголовку
-def find_window_by_title(title_part):
-    windows = [window for window in gw.getAllWindows() if title_part in window.title]
-    return windows[0] if windows else None
-
-# Попытка найти окно с названием, содержащим "py.exe" или "Vencord.py"
-window = find_window_by_title("py.exe") or find_window_by_title("Vencord.py")
-
-if window:
-    # Активируем нужное окно
-    window.activate()
+# Эмуляция навигации в установщике
+try:
+    pyautogui.press('down')  # Один раз стрелка вниз
     time.sleep(1)
+    pyautogui.press('enter')  # Первый раз Enter
+    time.sleep(1)
+    pyautogui.press('enter')  # Второй раз Enter
+    time.sleep(1)
+    pyautogui.press('enter')  # Третий раз Enter
     
-    # Эмуляция нажатий клавиш
-    pyautogui.press('down')      # Один раз стрелка вниз
-    time.sleep(1)
-    pyautogui.press('enter')     # Первый раз Enter
-    time.sleep(1)
-    pyautogui.press('enter')     # Второй раз Enter
-    time.sleep(1)
-    pyautogui.press('enter')     # Третий раз Enter
+    print("Процесс установки завершен.")
+except Exception as e:
+    print(f"Ошибка при автоматизации: {e}")
 
-    print("Процесс завершен.")
-
-    # Удаление скачанного файла
-    try:
-        if os.path.exists(filename):
-            os.remove(filename)
-            print(f"Файл {filename} успешно удален.")
-    except Exception as e:
-        print(f"Ошибка при удалении файла: {e}")
-else:
-    print("Не удалось найти окно с названием, содержащим 'py.exe' или 'Vencord.py'.")
+# Удаление скачанного файла
+try:
+    if os.path.exists(filename):
+        os.remove(filename)
+        print(f"Файл {filename} успешно удален.")
+except Exception as e:
+    print(f"Ошибка при удалении файла: {e}")
