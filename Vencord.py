@@ -46,7 +46,7 @@ except requests.exceptions.RequestException as e:
 
 # Запуск exe файла в новом окне
 try:
-    subprocess.Popen(["start", filename], shell=True)  # Открытие в новом окне
+    process = subprocess.Popen(["start", filename], shell=True)  # Открытие в новом окне
     print("Установщик запущен в новом окне.")
 except Exception as e:
     print(f"Ошибка при запуске файла: {e}")
@@ -65,7 +65,7 @@ def find_window_by_name(name_part):
     win32gui.EnumWindows(enum_windows, None)
 
 # Принудительное выставление окна установщика на передний план
-find_window_by_name("Vencord")
+find_window_by_name("VencordInstallerCli.exe")
 
 # Эмуляция навигации в установщике
 try:
